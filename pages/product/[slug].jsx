@@ -48,19 +48,21 @@ const ProductDetails = ({ product, products }) => {
                         </p>
                     </div>
                     <div className="buttons">
+
                         <button type="button" className="add-to-cart" onClick="">Add to Cart</button>
+
                         <button type="button" className="buy-now" onClick="">Buy Now</button>
+
                     </div>
                 </div>
             </div>
+
             <div className="maylike-products-wrapper">
                 <h2>You may also like</h2>
                 <div className="marquee">
-                    <div className="maylike-producsts-container track">
-                        {products.map((item) => (
-                            <Product key={item._id}
-                                product={item} />
-                        ))}
+                    <div className="maylike-products-container track">
+                        {products.map((item) =>
+                            <Product key={item._id} product={item} />)}
                     </div>
                 </div>
             </div>
@@ -70,10 +72,11 @@ const ProductDetails = ({ product, products }) => {
 
 export const getStaticPaths = async () => {
     const query = `*[_type == "product"] {
-        slug {
-            current
-        }
-    }`;
+      slug {
+        current
+      }
+    }
+    `;
 
     const products = await client.fetch(query);
 
@@ -91,12 +94,12 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params: { slug } }) => {
     const query = `*[_type == "product" && slug.current == '${slug}'][0]`;
-    const productQuery = '[_type == "product"]';
-    const product = await client.fetch(query);
-    const products = await client.fetch(productQuery);
+    const productsQuery = '*[_type == "product"]'
 
-    const bannerQuery = '*[_type == "banner"]';
-    const bannerData = await client.fetch(bannerQuery);
+    const product = await client.fetch(query);
+    const products = await client.fetch(productsQuery);
+
+    console.log(product);
 
     return {
         props: { products, product }
