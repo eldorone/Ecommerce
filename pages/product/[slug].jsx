@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { client, urlFor } from '../../lib/client';
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import { Product } from '../../components';
+import { Product, QuantitySelector } from '../../components'; // Assuming you have separate components for Product and QuantitySelector
 import { useStateContext } from '../../context/StateContext';
 
 const ProductDetails = ({ product, products }) => {
@@ -12,7 +12,7 @@ const ProductDetails = ({ product, products }) => {
     const handleBuyNow = () => {
         onAdd(product, qty);
         setShowCart(true);
-    }
+    };
 
     return (
         <div>
@@ -42,27 +42,18 @@ const ProductDetails = ({ product, products }) => {
                             <AiFillStar />
                             <AiOutlineStar />
                         </div>
-                        <p>
-                            (20)
-                        </p>
+                        <p>(20)</p>
                     </div>
                     <h4>Details: </h4>
                     <p>{details}</p>
                     <p className="price">${price}</p>
                     <div className="quantity">
                         <h3>Quantity: </h3>
-                        <p className="quantity-desc">
-                            <span className="minus" onClick={decQty}><AiOutlineMinus /></span>
-                            <span className="num">{qty}</span>
-                            <span className="plus" onClick={incQty}><AiOutlinePlus /></span>
-                        </p>
+                        <QuantitySelector decQty={decQty} incQty={incQty} qty={qty} />
                     </div>
                     <div className="buttons">
-
                         <button type="button" className="add-to-cart" onClick={() => onAdd(product, qty)}>Add to Cart</button>
-
                         <button type="button" className="buy-now" onClick={handleBuyNow}>Buy Now</button>
-
                     </div>
                 </div>
             </div>
@@ -71,14 +62,15 @@ const ProductDetails = ({ product, products }) => {
                 <h2>You may also like</h2>
                 <div className="marquee">
                     <div className="maylike-products-container track">
-                        {products.map((item) =>
-                            <Product key={item._id} product={item} />)}
+                        {products.map((item) => (
+                            <Product key={item._id} product={item} />
+                        ))}
                     </div>
                 </div>
             </div>
-        </div >
-    )
-}
+        </div>
+    );
+};
 
 export const getStaticPaths = async () => {
     const query = `*[_type == "product"] {
@@ -116,4 +108,4 @@ export const getStaticProps = async ({ params: { slug } }) => {
     }
 }
 
-export default ProductDetails
+export default ProductDetails;
