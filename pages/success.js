@@ -14,7 +14,7 @@ const Success = () => {
         setTotalPrice(0);
         setTotalQuantities(0);
         runFireworks();
-    }, []);
+    }, []); // Empty dependency array
 
     return (
         <div className="success-wrapper">
@@ -31,13 +31,13 @@ const Success = () => {
                     </a>
                 </p>
                 <Link href="/">
-                    <button type="button" width="300px" className="btn">
+                    <button type="button" className="btn" style={{ width: '300px' }}>
                         Continue Shopping
                     </button>
                 </Link>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Success
+export default Success;
